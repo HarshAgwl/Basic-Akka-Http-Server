@@ -15,14 +15,10 @@ trait SingleFieldJsonProtocol extends DefaultJsonProtocol {
   implicit val statusFormat = jsonFormat1(Status)
 }
 
-object HighLevelApiServer extends App with SingleFieldJsonProtocol with SprayJsonSupport {
 
-  implicit val system = ActorSystem("HighLevelApiServer")
-  implicit val materializer = ActorMaterializer()
+object HighLevelApiServer extends SingleFieldJsonProtocol with SprayJsonSupport {
 
-  import system.dispatcher
   import akka.http.scaladsl.server.Directives._
-
 
   val route =
     (path("greet" / Segment) & get) { nameOfUser: String =>
@@ -32,6 +28,13 @@ object HighLevelApiServer extends App with SingleFieldJsonProtocol with SprayJso
         complete(Status("OK"))
       }
 
+  def main(args: Array[String]):Unit ={
+    implicit val system = ActorSystem("HighLevelApiServer")
+    implicit val materializer = ActorMaterializer()
 
-  Http().bindAndHandle(route, "localhost", 8080)
+    import system.dispatcher
+
+    Http().bindAndHandle(route, "localhost", 8080)
+  }
+
 }
