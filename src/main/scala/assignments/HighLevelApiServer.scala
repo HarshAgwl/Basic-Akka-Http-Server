@@ -15,7 +15,6 @@ trait SingleFieldJsonProtocol extends DefaultJsonProtocol {
   implicit val statusFormat = jsonFormat1(Status)
 }
 
-
 object HighLevelApiServer extends SingleFieldJsonProtocol with SprayJsonSupport {
 
   import akka.http.scaladsl.server.Directives._
@@ -34,7 +33,7 @@ object HighLevelApiServer extends SingleFieldJsonProtocol with SprayJsonSupport 
 
     import system.dispatcher
 
-    Http().bindAndHandle(route, "localhost", 8080)
+    Http().bindAndHandle(route, "0.0.0.0", 8080)
   }
 
 }
