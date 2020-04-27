@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-server-deployment
+  labels:
+    app: example-server
+    type: front-end
+
+spec:
+  template:
+    metadata:
+      name: example-server-pod
+      labels:
+        app: example-server
+
+    spec:
+      containers:
+        - name: example-server-container
+          image: itsharshag/basic-akka-http-app:1
+
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: example-server
