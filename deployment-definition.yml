@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: example-server-deployment
+  name: example-akka-http-server
   labels:
     app: example-server
     type: front-end
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: example-server-container
-          image: itsharshag/basic-akka-http-app:1
+          image: itsharshag/basic-akka-http-app:4
 
   replicas: 3
 
