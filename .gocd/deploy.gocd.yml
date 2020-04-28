@@ -5,6 +5,8 @@ pipelines:
       pipeline-material:
         pipeline: publish-docker-akka-server
         stage: publish-docker-image
+      git-material:
+        git: https://github.com/HarshAgwl/Basic-Akka-Http-Server.git
     stages:
       - deploy-on-minikube:
           jobs:
