@@ -1,0 +1,34 @@
+pipelines:
+  publish-docker-akka-server:
+    group: basic-server
+    materials:
+      pipeline-material:
+        pipeline: build-jar-akka-server
+        stage: build-jar
+      git-material:
+        git: https://github.com/HarshAgwl/Basic-Akka-Http-Server.git
+    stages:
+      - build-docker-image:
+          jobs:
+            build:
+              tasks:
+                - fetch:
+                    pipeline: build-jar-akka-server
+                    stage: build-jar
+                    job: build
+                    source: akka-http-app-assembly-0.1.jar
+                    is_file: yes
+                - exec:
+                    command: sh
+                    arguments:
+                      - -c
+                      - docker build -t itsharshag/basic-akka-http-app:$GO_PIPELINE_LABEL --build-arg jarName=akka-http-app-assembly-0.1.jar --build-arg jarPath=./akka-http-app-assembly-0.1.jar .
+      - publish-docker-image:
+          jobs:
+            publish:
+              tasks:
+                - exec:
+                    command: sh
+                    arguments:
+                      - -c
+                      - docker push itsharshag/basic-akka-http-app:$GO_PIPELINE_LABEL

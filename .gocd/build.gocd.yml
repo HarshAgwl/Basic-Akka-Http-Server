@@ -1,0 +1,24 @@
+pipelines:
+  build-jar-akka-server:
+    group: basic-server
+    materials:
+      git-material:
+        git: https://github.com/HarshAgwl/Basic-Akka-Http-Server.git
+    stages:
+      - build-jar:
+          jobs:
+            build:
+              tasks:
+                - exec:
+                    command: sbt
+                    arguments:
+                      - clean
+                      - compile
+                      - test
+                - exec:
+                    command: sbt
+                    arguments:
+                      - assembly
+              artifacts:
+                - build:
+                    source: target/scala-2.12/akka-http-app-assembly-0.1.jar

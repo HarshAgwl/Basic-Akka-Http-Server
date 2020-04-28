@@ -1,0 +1,17 @@
+pipelines:
+  deploy-akka-server-minikube:
+    group: basic-server
+    materials:
+      pipeline-material:
+        pipeline: publish-docker-akka-server
+        stage: publish-docker-image
+    stages:
+      - deploy-on-minikube:
+          jobs:
+            update-deployment-yaml:
+              tasks:
+                - exec:
+                    command: sh
+                    arguments:
+                      - -c
+                      - ./ops/scripts/deploy.sh
