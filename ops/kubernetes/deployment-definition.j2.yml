@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basic-akka-http-app
+  labels:
+    app: basic-akka-http-app
+
+spec:
+  template:
+    metadata:
+      name: basic-akka-http-app
+      labels:
+        app: basic-akka-http-app
+
+    spec:
+      containers:
+        - name: basic-akka-http-app-container
+          image: itsharshag/basic-akka-http-app:{{ GO_DEPENDENCY_LABEL_PIPELINE_MATERIAL }}
+  replicas: 3
+  selector:
+    matchLabels:
+      app: basic-akka-http-app
